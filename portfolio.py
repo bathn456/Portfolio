@@ -7,374 +7,376 @@ import numpy as np
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
     page_title="Ahmet Batuhan Yilmaz | AI Architect",
-    page_icon="🤖",
+    page_icon="🍏",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# --- CUSTOM "NEO-CYBERPUNK" STYLING ---
+# --- CUSTOM "CUPERTINO" STYLING ---
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;600;700&display=swap');
-
-    /* 1. Global Background - The "Matrix" Void */
+    /* 1. Global Background - Apple Off-White */
     .stApp {
-        background-color: #050505;
-        background-image: 
-            linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
-        background-size: 40px 40px;
-        color: #e0e0e0;
-        font-family: 'Space Grotesk', sans-serif;
+        background-color: #f5f5f7;
+        color: #1d1d1f;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* 2. Sidebar - Stealth Mode */
+    /* 2. Sidebar - Frosted Glassish */
     section[data-testid="stSidebar"] {
-        background-color: #000000;
-        border-right: 1px solid #1f1f1f;
+        background-color: #ffffff;
+        border-right: 1px solid rgba(0,0,0,0.05);
     }
     
-    /* 3. Typography - Engineered */
-    h1, h2, h3 {
-        font-family: 'Space Grotesk', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+    /* 3. Typography - San Francisco Style */
+    h1, h2, h3, h4 {
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #1d1d1f;
     }
     
-    .mono-font {
-        font-family: 'JetBrains Mono', monospace;
+    p {
+        color: #86868b;
+        font-size: 1.05rem;
+        line-height: 1.5;
     }
     
-    /* 4. Hero Name - Glitch Effect Style */
+    /* 4. Hero Name - Massive & Clean */
     .hero-name {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 4rem;
-        font-weight: 800;
-        color: #fff;
-        text-shadow: 2px 2px 0px #bc13fe;
-        line-height: 1.1;
-        margin-bottom: 15px;
+        font-size: 4.5rem;
+        font-weight: 700;
+        background: linear-gradient(180deg, #1d1d1f 0%, #424245 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
     }
     
     .hero-subtitle {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 1.1rem;
-        color: #00ff41; /* Toxic Green */
-        border-left: 4px solid #bc13fe; /* Cyber Purple */
-        padding-left: 20px;
-        margin-bottom: 30px;
+        font-size: 1.5rem;
+        color: #86868b;
+        font-weight: 400;
+        margin-bottom: 40px;
+        max-width: 600px;
     }
     
-    /* 5. Cyber Cards - High Contrast Borders */
-    .cyber-card {
-        background: #0a0a0a;
-        border: 1px solid #333;
-        border-left: 4px solid #00ff41;
-        padding: 25px;
-        margin-bottom: 25px;
-        position: relative;
-        transition: all 0.2s ease-in-out;
+    /* 5. Bento Box Cards */
+    .apple-card {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 30px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: 1px solid rgba(0,0,0,0.02);
     }
     
-    .cyber-card:hover {
-        border-color: #bc13fe;
-        box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
-        transform: translateX(5px);
+    .apple-card:hover {
+        transform: scale(1.01);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.08);
     }
     
-    /* Corner Accents for Cards */
-    .cyber-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 10px;
-        height: 10px;
-        border-top: 2px solid #fff;
-        border-right: 2px solid #fff;
-    }
-
-    /* 6. Skill Terminal Tags */
-    .tech-tag {
+    /* 6. Tags & Badges */
+    .tech-badge {
         display: inline-block;
-        font-family: 'JetBrains Mono', monospace;
-        padding: 4px 10px;
+        padding: 6px 14px;
         margin: 0 6px 8px 0;
-        background: #111;
-        border: 1px solid #00ff41;
-        color: #00ff41;
-        font-size: 0.8rem;
+        background: #f5f5f7;
+        color: #1d1d1f;
+        border-radius: 980px; /* Pill shape */
+        font-size: 0.85rem;
+        font-weight: 500;
     }
     
-    /* Buttons Override */
+    /* 7. Buttons - The "Apple Blue" Pill */
     div.stButton > button {
-        background-color: #000;
-        color: #00ff41;
-        border: 1px solid #00ff41;
-        border-radius: 0;
-        font-family: 'JetBrains Mono', monospace;
-        transition: 0.3s;
-    }
-    div.stButton > button:hover {
-        background-color: #00ff41;
-        color: #000;
-        box-shadow: 0 0 10px #00ff41;
+        background-color: #0071e3;
+        color: white;
+        border: none;
+        border-radius: 980px;
+        padding: 10px 24px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: background-color 0.2s;
     }
     
-    /* Remove default top padding */
+    div.stButton > button:hover {
+        background-color: #0077ed;
+        color: white;
+        box-shadow: none;
+    }
+    
+    /* Remove default padding */
     .block-container {
-        padding-top: 2rem;
+        padding-top: 3rem;
+    }
+    
+    /* Link styling */
+    a {
+        color: #0071e3;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st.image("https://api.dicebear.com/9.x/notionists/svg?seed=Ahmet", width=120)
-    st.markdown("### AHMET B. YILMAZ")
-    st.markdown("<span style='color:#00ff41; font-family:JetBrains Mono'>AI_ARCHITECT</span>", unsafe_allow_html=True)
+    st.image("https://api.dicebear.com/9.x/notionists/svg?seed=Ahmet", width=100)
+    st.markdown("### Ahmet B. Yilmaz")
+    st.caption("AI Architect & Researcher")
     
     st.markdown("---")
     
-    # Navigation
     page = st.radio(
-        "SYSTEM_NAV",
-        ["// HOME", "// EXPERTISE", "// PROJECTS", "// CONTACT"],
-        label_visibility="collapsed"
+        "Navigation",
+        ["Overview", "Expertise", "Projects", "Contact"],
+        label_visibility="hidden"
     )
     
     st.markdown("---")
-    
     col_s1, col_s2 = st.columns(2)
     with col_s1:
-        st.link_button("GIT_HUB", "https://github.com/")
+        st.link_button("GitHub", "https://github.com/")
     with col_s2:
-        st.link_button("LINKED_IN", "https://linkedin.com/")
-        
-    st.caption("SYS.VER.2025.1")
+        st.link_button("LinkedIn", "https://linkedin.com/")
 
-# --- HOME SECTION ---
-if page == "// HOME":
-    # 2-Column Hero Layout
-    col_hero_text, col_hero_img = st.columns([1.5, 1])
+# --- OVERVIEW SECTION ---
+if page == "Overview":
+    # Centered Hero Layout typical of Apple Product Pages
+    st.markdown("<br>", unsafe_allow_html=True)
     
-    with col_hero_text:
-        st.markdown('<div class="hero-name">ENGINEERING<br>INTELLIGENCE.</div>', unsafe_allow_html=True)
-        st.markdown("""
-        <div class="hero-subtitle">
-        > INITIALIZING RAG_SYSTEMS...<br>
-        > OPTIMIZING LLM_VECTORS...<br>
-        > ELIMINATING HALLUCINATIONS...<br><br>
-        I build high-precision AI architectures grounded in scientific rigor.
-        </div>
-        """, unsafe_allow_html=True)
+    c1, c2 = st.columns([1.5, 1])
+    
+    with c1:
+        st.markdown('<div class="hero-name">Engineering<br>Intelligence.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="hero-subtitle">High-precision RAG architectures grounded in scientific rigor.</div>', unsafe_allow_html=True)
         
-        # Call to Actions
-        c1, c2 = st.columns([1, 1.5])
-        with c1:
-            st.button("INIT_PROJECTS 🚀")
-        with c2:
-            st.download_button("DOWNLOAD_DATA [CV] 💾", "Placeholder Data", "Ahmet_Yilmaz_CV.pdf")
-            
-        st.markdown("---")
-        
-        # Quick Stats in Cyber Cards
-        st.markdown("""
-        <div class="cyber-card">
-            <h4 class="mono-font" style="margin:0; color:#bc13fe;">// CORE_DIRECTIVE</h4>
-            <p style="margin:0; color:#a0aec0; font-size:0.9rem; margin-top: 10px;">
-                Retrieval-Augmented Generation • Vector Search • Deep Learning Research
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+        col_cta1, col_cta2 = st.columns([1, 2])
+        with col_cta1:
+            st.button("View Projects")
+        with col_cta2:
+             st.download_button("Download Resume", "Placeholder Data", "Ahmet_Yilmaz_CV.pdf")
 
-    with col_hero_img:
-        # Cyber Wireframe Visualization
-        # Creating a digital terrain mesh
-        x = np.linspace(-5, 5, 40)
-        y = np.linspace(-5, 5, 40)
+    with c2:
+        # Elegant smooth mesh visualization
+        # Using a clean surface plot that looks like abstract fluid art
+        x = np.linspace(-3, 3, 50)
+        y = np.linspace(-3, 3, 50)
         X, Y = np.meshgrid(x, y)
-        Z = np.sin(np.sqrt(X**2 + Y**2))
+        Z = np.sin(X) * np.cos(Y)
 
         fig = go.Figure(data=[go.Surface(
             z=Z, x=X, y=Y,
-            colorscale='Electric', # Neon colors
+            colorscale=[[0, '#eef2f3'], [1, '#0071e3']], # White to Blue
             showscale=False,
-            contours = {
-                "x": {"show": True, "start": 1.5, "end": 2, "size": 0.04, "color":"white"},
-                "y": {"show": True, "start": 0.5, "end": 0.8, "size": 0.05, "color":"white"},
-                "z": {"show": False}
-            }
+            opacity=0.9
         )])
         
         fig.update_layout(
             scene=dict(
-                xaxis=dict(visible=False, backgroundcolor="rgba(0,0,0,0)"),
-                yaxis=dict(visible=False, backgroundcolor="rgba(0,0,0,0)"),
-                zaxis=dict(visible=False, backgroundcolor="rgba(0,0,0,0)"),
-                bgcolor='rgba(0,0,0,0)'
+                xaxis=dict(visible=False),
+                yaxis=dict(visible=False),
+                zaxis=dict(visible=False),
+                camera=dict(eye=dict(x=1.5, y=1.5, z=1.5))
             ),
-            paper_bgcolor='rgba(0,0,0,0)',
             margin=dict(l=0, r=0, t=0, b=0),
-            height=500
+            height=400
         )
         st.plotly_chart(fig, use_container_width=True)
 
-# --- EXPERTISE SECTION ---
-elif page == "// EXPERTISE":
-    st.title("TECHNICAL_ARSENAL ⚔️")
-    st.markdown("<span class='mono-font'>BRIDGING ACADEMIC THEORY <-> PRODUCTION SCALING</span>", unsafe_allow_html=True)
-    st.write("") # Spacer
+    st.markdown("<br><br>", unsafe_allow_html=True)
     
-    # Grid Layout
-    col1, col2 = st.columns(2)
+    # "Feature" Grid - Bento Box Style
+    st.subheader("Core Technologies")
+    row1_1, row1_2, row1_3 = st.columns(3)
     
-    with col1:
+    with row1_1:
         st.markdown("""
-        <div class="cyber-card">
-            <h3 class="mono-font" style="color:#00ff41;">01. GEN_AI & RAG</h3>
-            <p style="color:#e0e0e0;">
-                Architecting context-aware search systems.
-            </p>
-            <div style="margin-top:15px;">
-                <span class="tech-tag">LANGCHAIN</span>
-                <span class="tech-tag">PINECONE</span>
-                <span class="tech-tag">OPENAI API</span>
-                <span class="tech-tag">LLAMA_INDEX</span>
-            </div>
+        <div class="apple-card">
+            <h3 style="color:#0071e3;">RAG Systems</h3>
+            <p>Advanced vector search architectures that eliminate hallucinations.</p>
         </div>
         """, unsafe_allow_html=True)
         
+    with row1_2:
         st.markdown("""
-        <div class="cyber-card">
-            <h3 class="mono-font" style="color:#bc13fe;">02. DEEP LEARNING</h3>
-            <p style="color:#e0e0e0;">
-                Custom neural networks for predictive analysis.
-            </p>
-            <div style="margin-top:15px;">
-                <span class="tech-tag">PYTORCH</span>
-                <span class="tech-tag">TENSORFLOW</span>
-                <span class="tech-tag">NUMPY</span>
-                <span class="tech-tag">SCIKIT-LEARN</span>
-            </div>
+        <div class="apple-card">
+            <h3 style="color:#bf4800;">Deep Learning</h3>
+            <p>Custom neural networks optimized for predictive accuracy.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with row1_3:
+        st.markdown("""
+        <div class="apple-card">
+            <h3 style="color:#8e8e93;">Scientific Rigor</h3>
+            <p>Methodologies backed by the latest peer-reviewed research.</p>
         </div>
         """, unsafe_allow_html=True)
 
-    with col2:
+# --- EXPERTISE SECTION ---
+elif page == "Expertise":
+    st.title("Technical Proficiencies")
+    st.markdown("A seamless blend of academic theory and production engineering.")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        # Large Card
         st.markdown("""
-        <div class="cyber-card">
-            <h3 class="mono-font" style="color:#fff;">03. FULL_STACK</h3>
-            <p style="color:#e0e0e0;">
-                Deploying Python logic to global endpoints.
-            </p>
-            <div style="margin-top:15px;">
-                <span class="tech-tag">STREAMLIT</span>
-                <span class="tech-tag">FASTAPI</span>
-                <span class="tech-tag">DOCKER</span>
-                <span class="tech-tag">FIREBASE</span>
+        <div class="apple-card">
+            <h3>Generative AI & LLMs</h3>
+            <p>Building the next generation of context-aware applications.</p>
+            <br>
+            <div>
+                <span class="tech-badge">LangChain</span>
+                <span class="tech-badge">Pinecone</span>
+                <span class="tech-badge">OpenAI</span>
+                <span class="tech-badge">LlamaIndex</span>
+                <span class="tech-badge">Vector DBs</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Techy Bar Chart
-        st.markdown("<h4 class='mono-font'>// SKILL_METRICS_LOADED</h4>", unsafe_allow_html=True)
+        # Two smaller cards side by side
+        c_a, c_b = st.columns(2)
+        with c_a:
+             st.markdown("""
+            <div class="apple-card">
+                <h4>Data Science</h4>
+                <p style="font-size:0.9rem">Pandas, NumPy, Scikit-Learn</p>
+            </div>
+            """, unsafe_allow_html=True)
+        with c_b:
+             st.markdown("""
+            <div class="apple-card">
+                <h4>Deployment</h4>
+                <p style="font-size:0.9rem">Streamlit, Docker, Firebase</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+    with col2:
+        # Tall card for stats
+        st.markdown("""
+        <div class="apple-card" style="height: 100%;">
+            <h4>Skill Metrics</h4>
+            <br>
+        """, unsafe_allow_html=True)
+        
+        # Clean Apple-style bar chart
         skill_df = pd.DataFrame({
-            "MODULE": ["RAG_ARCH", "PYTHON", "STREAMLIT", "NN_MODELS"],
-            "LEVEL": [98, 92, 95, 88]
+            "Skill": ["RAG Architecture", "Python", "Streamlit", "Deep Learning"],
+            "Value": [95, 90, 95, 85]
         })
         
-        fig_skills = px.bar(skill_df, x="LEVEL", y="MODULE", orientation='h', 
-                           range_x=[0,100], text="LEVEL")
-        fig_skills.update_traces(marker_color='#bc13fe', textfont_family='JetBrains Mono')
+        fig_skills = px.bar(skill_df, x="Value", y="Skill", orientation='h', text="Value")
+        fig_skills.update_traces(marker_color='#1d1d1f', textposition='inside', textfont_color='white')
         fig_skills.update_layout(
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
-            font_color='#00ff41',
-            font_family='JetBrains Mono',
-            xaxis=dict(showgrid=True, gridcolor='#333'),
+            xaxis=dict(showgrid=False, showticklabels=False),
             yaxis=dict(showgrid=False),
             margin=dict(l=0, r=0, t=0, b=0),
-            height=200
+            height=300
         )
         st.plotly_chart(fig_skills, use_container_width=True)
+        
+        st.markdown("</div>", unsafe_allow_html=True)
 
 # --- PROJECTS SECTION ---
-elif page == "// PROJECTS":
-    st.title("PROJECT_DATABASE 📂")
+elif page == "Projects":
+    st.title("Selected Works")
+    st.markdown("Innovation in every line of code.")
     
-    # Project 1
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Project 1 - Full Width Card
     st.markdown("""
-    <div class="cyber-card">
+    <div class="apple-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0; color:#00ff41;">> PDF_CHATBOT_RAG</h3>
-            <span style="background:#00ff41; color:black; padding:2px 8px; font-family:'JetBrains Mono'; font-weight:bold;">STATUS: ONLINE</span>
+             <h2 style="margin:0;">PDF Chatbot RAG System</h2>
+             <span style="color:#2ecc71; font-weight:600; font-size:0.8rem;">● Live</span>
         </div>
-        <p style="margin-top:10px; color:#e0e0e0; font-family:'JetBrains Mono'; font-size: 0.9rem;">
-            SYSTEM_DESC: Production-ready RAG application turning static docs into interactive knowledge bases.<br>
-            OBJECTIVE: Reduce hallucinations via vector embeddings.
+        <p style="margin-top:10px; font-size:1.1rem;">
+            A production-ready intelligent document assistant.
         </p>
-        <div style="margin-top:15px;">
-            <span class="tech-tag">STREAMLIT</span>
-            <span class="tech-tag">VECTOR_DB</span>
-            <span class="tech-tag">LLM_INTEGRATION</span>
-        </div>
+        <p style="font-size:0.95rem; color:#86868b;">
+            Uses advanced vector embeddings to retrieve precise context from uploaded PDF documents, effectively eliminating AI hallucinations.
+        </p>
+        <br>
+        <span class="tech-badge">Streamlit</span>
+        <span class="tech-badge">RAG</span>
+        <span class="tech-badge">LLM Integration</span>
     </div>
     """, unsafe_allow_html=True)
     
-    col_p1, col_p2 = st.columns([1, 4])
-    with col_p1:
-        st.link_button("EXECUTE_APP [>>]", "https://pdf-chatbot-rag-system-batuhanyilmaz.streamlit.app")
-    
+    c1, c2 = st.columns([1, 4])
+    with c1:
+        st.link_button("Launch App ↗", "https://pdf-chatbot-rag-system-batuhanyilmaz.streamlit.app")
+        
+    st.markdown("<br>", unsafe_allow_html=True)
+
     # Project 2
     st.markdown("""
-    <div class="cyber-card" style="border-left: 4px solid #bc13fe;">
+    <div class="apple-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0; color:#bc13fe;">> DL_PORTFOLIO_HUB</h3>
-            <span style="background:#bc13fe; color:white; padding:2px 8px; font-family:'JetBrains Mono'; font-weight:bold;">STATUS: ONLINE</span>
+             <h2 style="margin:0;">Deep Learning Portfolio Hub</h2>
+             <span style="color:#2ecc71; font-weight:600; font-size:0.8rem;">● Live</span>
         </div>
-        <p style="margin-top:10px; color:#e0e0e0; font-family:'JetBrains Mono'; font-size: 0.9rem;">
-            SYSTEM_DESC: Central repository for deep learning experiments and docs.<br>
-            HOSTING: Firebase high-availability cluster.
+        <p style="margin-top:10px; font-size:1.1rem;">
+            The central nervous system for my research.
         </p>
-        <div style="margin-top:15px;">
-            <span class="tech-tag">FIREBASE</span>
-            <span class="tech-tag">WEB_DEV</span>
-            <span class="tech-tag">RESEARCH</span>
-        </div>
+        <p style="font-size:0.95rem; color:#86868b;">
+            A Firebase-hosted platform dedicated to showcasing deep learning experiments, technical documentation, and scientific analysis.
+        </p>
+        <br>
+        <span class="tech-badge">Firebase</span>
+        <span class="tech-badge">Web Dev</span>
+        <span class="tech-badge">Research</span>
     </div>
     """, unsafe_allow_html=True)
     
-    col_p3, col_p4 = st.columns([1, 4])
-    with col_p3:
-        st.link_button("ACCESS_HUB [>>]", "https://deeplearningwithbatuhanyilmaz.web.app")
+    c3, c4 = st.columns([1, 4])
+    with c3:
+        st.link_button("Visit Site ↗", "https://deeplearningwithbatuhanyilmaz.web.app")
 
 # --- CONTACT SECTION ---
-elif page == "// CONTACT":
-    st.title("ESTABLISH_UPLINK 📡")
+elif page == "Contact":
+    st.title("Get in Touch")
     
-    col1, col2 = st.columns([1, 1])
+    c1, c2 = st.columns([1, 1])
     
-    with col1:
+    with c1:
         st.markdown("""
-        <div class="cyber-card">
-            <h4 class="mono-font">COMMS_CHANNEL</h4>
-            <p>📧 <b>EMAIL:</b> ybatu42@gmail.com</p>
-            <p>📱 <b>PHONE:</b> +90 551 706 52 03</p>
-            <p>📍 <b>LOC:</b> Çanakkale, Türkiye</p>
+        <div class="apple-card">
+            <h3>Contact Information</h3>
             <br>
-            <p style="color:#00ff41; font-family:'JetBrains Mono';">
-                "Ready for new AI directives and RAG consulting."
+            <p><b>Email</b><br>ybatu42@gmail.com</p>
+            <p><b>Phone</b><br>+90 551 706 52 03</p>
+            <p><b>Location</b><br>Çanakkale, Türkiye</p>
+            <br>
+            <p style="font-size:0.9rem; color:#86868b;">
+                Available for AI Engineering roles and consulting.
             </p>
         </div>
         """, unsafe_allow_html=True)
         
-    with col2:
-        st.markdown("<h4 class='mono-font'>SEND_TRANSMISSION</h4>", unsafe_allow_html=True)
+    with c2:
+        st.markdown("""
+        <div class="apple-card">
+            <h3>Send a Message</h3>
+            <p style="font-size:0.9rem">I'll get back to you as soon as possible.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
         with st.form("contact_form"):
-            name = st.text_input("USER_ID")
-            email = st.text_input("RETURN_ADDRESS")
-            message = st.text_area("DATA_PACKET")
-            submit = st.form_submit_button("TRANSMIT")
-            
-            if submit:
-                st.success("TRANSMISSION_RECEIVED. STAND BY FOR RESPONSE.")
+            st.text_input("Name")
+            st.text_input("Email")
+            st.text_area("Message")
+            st.form_submit_button("Send Message")
