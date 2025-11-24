@@ -123,9 +123,9 @@ st.markdown("""
         font-weight: 500;
     }
     
-    /* Remove default padding */
+    /* Remove default padding - Adjusted to 3.5rem to prevent top bar overlap */
     .block-container {
-        padding-top: 1rem;
+        padding-top: 3.5rem;
         padding-bottom: 5rem;
     }
     
