@@ -39,8 +39,8 @@ st.markdown("""
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* 2. Custom Navbar Styling */
-    div.stButton > button {
+    /* 2. Custom Navbar Styling (Secondary Buttons) */
+    div.stButton > button[kind="secondary"] {
         background-color: transparent;
         color: #1d1d1f;
         border: none;
@@ -50,19 +50,40 @@ st.markdown("""
         transition: color 0.2s, background-color 0.2s;
     }
     
-    div.stButton > button:hover {
+    div.stButton > button[kind="secondary"]:hover {
         color: #0071e3;
         background-color: rgba(0, 113, 227, 0.1);
         border-radius: 8px;
     }
     
-    div.stButton > button:focus {
+    div.stButton > button[kind="secondary"]:focus {
         background-color: #0071e3 !important;
         color: white !important;
         border-radius: 20px;
     }
-    
-    /* 3. Typography - San Francisco Style */
+
+    /* 3. Primary CTA Button Styling (The "View Projects" Button) */
+    div.stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #0071e3 0%, #0077ed 100%);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 0.6rem 1.8rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+        transition: all 0.3s ease;
+        letter-spacing: 0.02em;
+    }
+
+    div.stButton > button[kind="primary"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 113, 227, 0.4);
+        background: linear-gradient(135deg, #0077ed 0%, #0088ff 100%);
+        border: none;
+    }
+
+    /* 4. Typography - San Francisco Style */
     h1, h2, h3, h4 {
         font-weight: 600;
         letter-spacing: -0.02em;
@@ -75,7 +96,7 @@ st.markdown("""
         line-height: 1.5;
     }
     
-    /* 4. Hero Name - Massive & Clean */
+    /* 5. Hero Name - Massive & Clean */
     .hero-name {
         font-size: 4.5rem;
         font-weight: 700;
@@ -95,7 +116,7 @@ st.markdown("""
         max-width: 600px;
     }
     
-    /* 5. Bento Box Cards */
+    /* 6. Bento Box Cards */
     .apple-card {
         background: #ffffff;
         border-radius: 24px;
@@ -111,7 +132,7 @@ st.markdown("""
         box-shadow: 0 12px 40px rgba(0,0,0,0.08);
     }
     
-    /* 6. Tags & Badges */
+    /* 7. Tags & Badges */
     .tech-badge {
         display: inline-block;
         padding: 6px 14px;
@@ -147,16 +168,16 @@ with col_logo:
     st.markdown("<h3 style='margin:0; padding-top:5px;'>Batuhan Yılmaz</h3>", unsafe_allow_html=True)
 
 with col_nav1:
-    if st.button("Overview"):
+    if st.button("Overview", type="secondary"):
         set_page("Overview")
 with col_nav2:
-    if st.button("Expertise"):
+    if st.button("Expertise", type="secondary"):
         set_page("Expertise")
 with col_nav3:
-    if st.button("Projects"):
+    if st.button("Projects", type="secondary"):
         set_page("Projects")
 with col_nav4:
-    if st.button("Contact"):
+    if st.button("Contact", type="secondary"):
         set_page("Contact")
 
 with col_social:
@@ -181,34 +202,15 @@ if page == "Overview":
         st.markdown('<div class="hero-name">Engineering<br>Intelligence.</div>', unsafe_allow_html=True)
         st.markdown('<div class="hero-subtitle">High-precision RAG architectures grounded in scientific rigor.</div>', unsafe_allow_html=True)
         
-        # Custom Primary Button Style
-        st.markdown("""
-        <style>
-        .cta-button {
-            background-color: #0071e3;
-            color: white; 
-            padding: 12px 28px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-block;
-        }
-        .cta-button:hover {
-            background-color: #0077ed;
-            color: white;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-        
         col_cta1, col_cta2 = st.columns([1, 2])
         with col_cta1:
-            if st.button("View Projects", key="hero_cta"):
+            # Using type="primary" triggers our custom CSS above
+            if st.button("View Projects 🚀", key="hero_cta", type="primary"):
                 set_page("Projects")
                 st.rerun()
                 
         with col_cta2:
             # 2. Resume File Logic
-            # Looks for 'resume.pdf' locally. If found, creates a download button.
             resume_path = "resume.pdf"
             if os.path.exists(resume_path):
                 with open(resume_path, "rb") as pdf_file:
@@ -219,7 +221,6 @@ if page == "Overview":
                         mime="application/pdf"
                     )
             else:
-                # Fallback if no file exists
                 st.download_button(
                     label="Download Resume (Demo)",
                     data="Please add a file named resume.pdf to the root directory.",
