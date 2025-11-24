@@ -3,14 +3,31 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import os
+
+# --- ASSET HANDLING ---
+# 1. Load Icon: Checks for local 'icon.png', falls back to online URL if missing
+icon_path = "icon.png"
+if os.path.exists(icon_path):
+    page_icon = icon_path
+else:
+    # Fallback to the online black "B" if local file isn't found
+    page_icon = "https://img.icons8.com/ios-glyphs/30/000000/b.png"
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="Ahmet Batuhan Yilmaz | AI Architect",
-    page_icon="🍏",
+    page_title="Batuhan Yılmaz | AI Architect",
+    page_icon=page_icon,
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+# --- STATE MANAGEMENT FOR NAVIGATION ---
+if 'page' not in st.session_state:
+    st.session_state.page = "Overview"
+
+def set_page(page_name):
+    st.session_state.page = page_name
 
 # --- CUSTOM "CUPERTINO" STYLING ---
 st.markdown("""
@@ -22,10 +39,27 @@ st.markdown("""
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     
-    /* 2. Sidebar - Frosted Glassish */
-    section[data-testid="stSidebar"] {
-        background-color: #ffffff;
-        border-right: 1px solid rgba(0,0,0,0.05);
+    /* 2. Custom Navbar Styling */
+    div.stButton > button {
+        background-color: transparent;
+        color: #1d1d1f;
+        border: none;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: color 0.2s, background-color 0.2s;
+    }
+    
+    div.stButton > button:hover {
+        color: #0071e3;
+        background-color: rgba(0, 113, 227, 0.1);
+        border-radius: 8px;
+    }
+    
+    div.stButton > button:focus {
+        background-color: #0071e3 !important;
+        color: white !important;
+        border-radius: 20px;
     }
     
     /* 3. Typography - San Francisco Style */
@@ -89,27 +123,10 @@ st.markdown("""
         font-weight: 500;
     }
     
-    /* 7. Buttons - The "Apple Blue" Pill */
-    div.stButton > button {
-        background-color: #0071e3;
-        color: white;
-        border: none;
-        border-radius: 980px;
-        padding: 10px 24px;
-        font-size: 1rem;
-        font-weight: 500;
-        transition: background-color 0.2s;
-    }
-    
-    div.stButton > button:hover {
-        background-color: #0077ed;
-        color: white;
-        box-shadow: none;
-    }
-    
     /* Remove default padding */
     .block-container {
-        padding-top: 3rem;
+        padding-top: 1rem;
+        padding-bottom: 5rem;
     }
     
     /* Link styling */
@@ -123,30 +140,39 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR ---
-with st.sidebar:
-    st.image("https://api.dicebear.com/9.x/notionists/svg?seed=Ahmet", width=100)
-    st.markdown("### Ahmet B. Yilmaz")
-    st.caption("AI Architect & Researcher")
-    
-    st.markdown("---")
-    
-    page = st.radio(
-        "Navigation",
-        ["Overview", "Expertise", "Projects", "Contact"],
-        label_visibility="hidden"
-    )
-    
-    st.markdown("---")
-    col_s1, col_s2 = st.columns(2)
-    with col_s1:
-        st.link_button("GitHub", "https://github.com/")
-    with col_s2:
-        st.link_button("LinkedIn", "https://linkedin.com/")
+# --- TOP NAVIGATION BAR ---
+col_logo, col_nav1, col_nav2, col_nav3, col_nav4, col_social = st.columns([2, 1, 1, 1, 1, 1])
+
+with col_logo:
+    st.markdown("<h3 style='margin:0; padding-top:5px;'>Batuhan Yılmaz</h3>", unsafe_allow_html=True)
+
+with col_nav1:
+    if st.button("Overview"):
+        set_page("Overview")
+with col_nav2:
+    if st.button("Expertise"):
+        set_page("Expertise")
+with col_nav3:
+    if st.button("Projects"):
+        set_page("Projects")
+with col_nav4:
+    if st.button("Contact"):
+        set_page("Contact")
+
+with col_social:
+    st.markdown("""
+        <div style="text-align: right; padding-top: 10px;">
+            <a href="https://github.com/" target="_blank" style="color:#1d1d1f; font-weight:bold; font-size: 0.9rem;">GitHub ↗</a>
+        </div>
+    """, unsafe_allow_html=True)
+
+st.markdown("---")
+
+# --- PAGE ROUTING ---
+page = st.session_state.page
 
 # --- OVERVIEW SECTION ---
 if page == "Overview":
-    # Centered Hero Layout typical of Apple Product Pages
     st.markdown("<br>", unsafe_allow_html=True)
     
     c1, c2 = st.columns([1.5, 1])
@@ -155,15 +181,53 @@ if page == "Overview":
         st.markdown('<div class="hero-name">Engineering<br>Intelligence.</div>', unsafe_allow_html=True)
         st.markdown('<div class="hero-subtitle">High-precision RAG architectures grounded in scientific rigor.</div>', unsafe_allow_html=True)
         
+        # Custom Primary Button Style
+        st.markdown("""
+        <style>
+        .cta-button {
+            background-color: #0071e3;
+            color: white; 
+            padding: 12px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+        }
+        .cta-button:hover {
+            background-color: #0077ed;
+            color: white;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
         col_cta1, col_cta2 = st.columns([1, 2])
         with col_cta1:
-            st.button("View Projects")
+            if st.button("View Projects", key="hero_cta"):
+                set_page("Projects")
+                st.rerun()
+                
         with col_cta2:
-             st.download_button("Download Resume", "Placeholder Data", "Ahmet_Yilmaz_CV.pdf")
+            # 2. Resume File Logic
+            # Looks for 'resume.pdf' locally. If found, creates a download button.
+            resume_path = "resume.pdf"
+            if os.path.exists(resume_path):
+                with open(resume_path, "rb") as pdf_file:
+                    st.download_button(
+                        label="Download Resume",
+                        data=pdf_file,
+                        file_name="Batuhan_Yilmaz_CV.pdf",
+                        mime="application/pdf"
+                    )
+            else:
+                # Fallback if no file exists
+                st.download_button(
+                    label="Download Resume (Demo)",
+                    data="Please add a file named resume.pdf to the root directory.",
+                    file_name="placeholder.txt"
+                )
 
     with c2:
         # Elegant smooth mesh visualization
-        # Using a clean surface plot that looks like abstract fluid art
         x = np.linspace(-3, 3, 50)
         y = np.linspace(-3, 3, 50)
         X, Y = np.meshgrid(x, y)
@@ -171,7 +235,7 @@ if page == "Overview":
 
         fig = go.Figure(data=[go.Surface(
             z=Z, x=X, y=Y,
-            colorscale=[[0, '#eef2f3'], [1, '#0071e3']], # White to Blue
+            colorscale=[[0, '#eef2f3'], [1, '#0071e3']], 
             showscale=False,
             opacity=0.9
         )])
@@ -228,7 +292,6 @@ elif page == "Expertise":
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        # Large Card
         st.markdown("""
         <div class="apple-card">
             <h3>Generative AI & LLMs</h3>
@@ -244,7 +307,6 @@ elif page == "Expertise":
         </div>
         """, unsafe_allow_html=True)
         
-        # Two smaller cards side by side
         c_a, c_b = st.columns(2)
         with c_a:
              st.markdown("""
@@ -262,14 +324,12 @@ elif page == "Expertise":
             """, unsafe_allow_html=True)
             
     with col2:
-        # Tall card for stats
         st.markdown("""
         <div class="apple-card" style="height: 100%;">
             <h4>Skill Metrics</h4>
             <br>
         """, unsafe_allow_html=True)
         
-        # Clean Apple-style bar chart
         skill_df = pd.DataFrame({
             "Skill": ["RAG Architecture", "Python", "Streamlit", "Deep Learning"],
             "Value": [95, 90, 95, 85]
@@ -296,7 +356,6 @@ elif page == "Projects":
     
     st.markdown("<br>", unsafe_allow_html=True)
     
-    # Project 1 - Full Width Card
     st.markdown("""
     <div class="apple-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -322,7 +381,6 @@ elif page == "Projects":
         
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Project 2
     st.markdown("""
     <div class="apple-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
