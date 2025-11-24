@@ -41,8 +41,11 @@ st.markdown("""
     .hero-name {
         font-size: 3em;
         font-weight: bold;
-        color: #4DB6AC;
+        background: -webkit-linear-gradient(45deg, #4DB6AC, #b2dfdb, #009688);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 0px;
+        text-shadow: 0px 0px 30px rgba(77, 182, 172, 0.4);
     }
     .hero-title {
         font-size: 1.5em;
