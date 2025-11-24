@@ -32,11 +32,14 @@ def set_page(page_name):
 # --- CUSTOM "CUPERTINO" STYLING ---
 st.markdown("""
     <style>
+    /* Import Inter Font for that clean, premium look */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     /* 1. Global Background - Apple Off-White */
     .stApp {
         background-color: #f5f5f7;
         color: #1d1d1f;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
     /* 2. Custom Navbar Styling (Secondary Buttons) */
@@ -48,6 +51,7 @@ st.markdown("""
         font-weight: 500;
         padding: 0.5rem 1rem;
         transition: color 0.2s, background-color 0.2s;
+        font-family: 'Inter', sans-serif;
     }
     
     div.stButton > button[kind="secondary"]:hover {
@@ -62,7 +66,7 @@ st.markdown("""
         border-radius: 20px;
     }
 
-    /* 3. Primary CTA Button Styling (The "View Projects" Button) */
+    /* 3. Primary CTA Button Styling */
     div.stButton > button[kind="primary"] {
         background: linear-gradient(135deg, #0071e3 0%, #0077ed 100%);
         color: white;
@@ -74,6 +78,7 @@ st.markdown("""
         box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
         transition: all 0.3s ease;
         letter-spacing: 0.02em;
+        font-family: 'Inter', sans-serif;
     }
 
     div.stButton > button[kind="primary"]:hover {
@@ -83,32 +88,36 @@ st.markdown("""
         border: none;
     }
 
-    /* 4. Typography - San Francisco Style */
+    /* 4. Typography - Inter Style */
     h1, h2, h3, h4 {
+        font-family: 'Inter', sans-serif;
         font-weight: 600;
         letter-spacing: -0.02em;
         color: #1d1d1f;
     }
     
     p {
+        font-family: 'Inter', sans-serif;
         color: #86868b;
         font-size: 1.05rem;
-        line-height: 1.5;
+        line-height: 1.6;
     }
     
     /* 5. Hero Name - Massive & Clean */
     .hero-name {
+        font-family: 'Inter', sans-serif;
         font-size: 4.5rem;
-        font-weight: 700;
+        font-weight: 800; /* Bolder for impact */
         background: linear-gradient(180deg, #1d1d1f 0%, #424245 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 10px;
-        line-height: 1.05;
+        line-height: 1.1;
         letter-spacing: -0.03em;
     }
     
     .hero-subtitle {
+        font-family: 'Inter', sans-serif;
         font-size: 1.5rem;
         color: #86868b;
         font-weight: 400;
@@ -142,6 +151,7 @@ st.markdown("""
         border-radius: 980px; /* Pill shape */
         font-size: 0.85rem;
         font-weight: 500;
+        font-family: 'Inter', sans-serif;
     }
     
     /* Remove default padding - Adjusted to 3.5rem to prevent top bar overlap */
@@ -204,8 +214,8 @@ if page == "Overview":
         
         col_cta1, col_cta2 = st.columns([1, 2])
         with col_cta1:
-            # Using type="primary" triggers our custom CSS above
-            if st.button("View Projects 🚀", key="hero_cta", type="primary"):
+            # Removed the rocket emoji
+            if st.button("View Projects", key="hero_cta", type="primary"):
                 set_page("Projects")
                 st.rerun()
                 
