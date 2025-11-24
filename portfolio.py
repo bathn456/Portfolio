@@ -7,85 +7,121 @@ import numpy as np
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
     page_title="Ahmet Batuhan Yilmaz | AI Architect",
-    page_icon="🧠",
+    page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="collapsed"  # Collapsed for a cleaner initial look
+    initial_sidebar_state="collapsed"
 )
 
-# --- CUSTOM MODERN STYLING ---
+# --- CUSTOM "NEO-CYBERPUNK" STYLING ---
 st.markdown("""
     <style>
-    /* 1. Global Background - Deep Space Gradient */
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;600;700&display=swap');
+
+    /* 1. Global Background - The "Matrix" Void */
     .stApp {
-        background: radial-gradient(circle at 15% 15%, #1a1c24 0%, #0e1117 100%);
-        color: #f0f2f6;
+        background-color: #050505;
+        background-image: 
+            linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        color: #e0e0e0;
+        font-family: 'Space Grotesk', sans-serif;
     }
     
-    /* 2. Sidebar Styling */
+    /* 2. Sidebar - Stealth Mode */
     section[data-testid="stSidebar"] {
-        background-color: #11131a;
-        border-right: 1px solid rgba(255,255,255,0.05);
+        background-color: #000000;
+        border-right: 1px solid #1f1f1f;
     }
     
-    /* 3. Typography Upgrade */
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Inter', sans-serif; /* Cleaner modern font */
-        letter-spacing: -0.5px;
+    /* 3. Typography - Engineered */
+    h1, h2, h3 {
+        font-family: 'Space Grotesk', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
-    h1 { font-weight: 800; }
     
-    /* 4. Hero Name - Modern Gradient */
+    .mono-font {
+        font-family: 'JetBrains Mono', monospace;
+    }
+    
+    /* 4. Hero Name - Glitch Effect Style */
     .hero-name {
-        font-size: 3.5rem;
-        font-weight: 900;
-        background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 10px;
-        line-height: 1.2;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 4rem;
+        font-weight: 800;
+        color: #fff;
+        text-shadow: 2px 2px 0px #bc13fe;
+        line-height: 1.1;
+        margin-bottom: 15px;
     }
     
     .hero-subtitle {
-        font-size: 1.2rem;
-        color: #a0aec0;
-        font-weight: 400;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1.1rem;
+        color: #00ff41; /* Toxic Green */
+        border-left: 4px solid #bc13fe; /* Cyber Purple */
+        padding-left: 20px;
         margin-bottom: 30px;
-        border-left: 3px solid #00C9FF;
-        padding-left: 15px;
     }
     
-    /* 5. Glassmorphism Cards */
-    .glass-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
+    /* 5. Cyber Cards - High Contrast Borders */
+    .cyber-card {
+        background: #0a0a0a;
+        border: 1px solid #333;
+        border-left: 4px solid #00ff41;
         padding: 25px;
         margin-bottom: 25px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        position: relative;
+        transition: all 0.2s ease-in-out;
     }
     
-    .glass-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px -10px rgba(0, 201, 255, 0.15);
-        border-color: rgba(0, 201, 255, 0.3);
+    .cyber-card:hover {
+        border-color: #bc13fe;
+        box-shadow: 0 0 15px rgba(188, 19, 254, 0.2);
+        transform: translateX(5px);
     }
     
-    /* 6. Skill Tags */
+    /* Corner Accents for Cards */
+    .cyber-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid #fff;
+        border-right: 2px solid #fff;
+    }
+
+    /* 6. Skill Terminal Tags */
     .tech-tag {
         display: inline-block;
-        padding: 5px 12px;
+        font-family: 'JetBrains Mono', monospace;
+        padding: 4px 10px;
         margin: 0 6px 8px 0;
-        background: rgba(0, 201, 255, 0.1);
-        border: 1px solid rgba(0, 201, 255, 0.2);
-        color: #92FE9D;
-        border-radius: 20px;
+        background: #111;
+        border: 1px solid #00ff41;
+        color: #00ff41;
         font-size: 0.8rem;
-        font-weight: 500;
     }
     
-    /* Remove default streamlit top padding */
+    /* Buttons Override */
+    div.stButton > button {
+        background-color: #000;
+        color: #00ff41;
+        border: 1px solid #00ff41;
+        border-radius: 0;
+        font-family: 'JetBrains Mono', monospace;
+        transition: 0.3s;
+    }
+    div.stButton > button:hover {
+        background-color: #00ff41;
+        color: #000;
+        box-shadow: 0 0 10px #00ff41;
+    }
+    
+    /* Remove default top padding */
     .block-container {
         padding-top: 2rem;
     }
@@ -95,15 +131,15 @@ st.markdown("""
 # --- SIDEBAR ---
 with st.sidebar:
     st.image("https://api.dicebear.com/9.x/notionists/svg?seed=Ahmet", width=120)
-    st.markdown("### Ahmet Batuhan Yilmaz")
-    st.caption("AI Architect & Researcher")
+    st.markdown("### AHMET B. YILMAZ")
+    st.markdown("<span style='color:#00ff41; font-family:JetBrains Mono'>AI_ARCHITECT</span>", unsafe_allow_html=True)
     
     st.markdown("---")
     
-    # Modern Icon Navigation
+    # Navigation
     page = st.radio(
-        "",
-        ["Home", "Expertise", "Projects", "Contact"],
+        "SYSTEM_NAV",
+        ["// HOME", "// EXPERTISE", "// PROJECTS", "// CONTACT"],
         label_visibility="collapsed"
     )
     
@@ -111,63 +147,71 @@ with st.sidebar:
     
     col_s1, col_s2 = st.columns(2)
     with col_s1:
-        st.link_button("GitHub", "https://github.com/")
+        st.link_button("GIT_HUB", "https://github.com/")
     with col_s2:
-        st.link_button("LinkedIn", "https://linkedin.com/")
+        st.link_button("LINKED_IN", "https://linkedin.com/")
         
-    st.caption("© 2025 Ahmet B. Yilmaz")
+    st.caption("SYS.VER.2025.1")
 
 # --- HOME SECTION ---
-if page == "Home":
+if page == "// HOME":
     # 2-Column Hero Layout
-    col_hero_text, col_hero_img = st.columns([1.2, 1])
+    col_hero_text, col_hero_img = st.columns([1.5, 1])
     
     with col_hero_text:
-        st.markdown('<div class="hero-name">Build. Scale.<br>Innovate.</div>', unsafe_allow_html=True)
-        st.markdown('<div class="hero-subtitle">I engineer AI systems grounded in scientific rigor. Specializing in RAG architectures that eliminate hallucinations and deliver real business value.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="hero-name">ENGINEERING<br>INTELLIGENCE.</div>', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="hero-subtitle">
+        > INITIALIZING RAG_SYSTEMS...<br>
+        > OPTIMIZING LLM_VECTORS...<br>
+        > ELIMINATING HALLUCINATIONS...<br><br>
+        I build high-precision AI architectures grounded in scientific rigor.
+        </div>
+        """, unsafe_allow_html=True)
         
         # Call to Actions
         c1, c2 = st.columns([1, 1.5])
         with c1:
-            st.link_button("Explore Projects 🚀", "https://github.com/")
+            st.button("INIT_PROJECTS 🚀")
         with c2:
-            st.download_button("Download CV 📄", "Placeholder Data", "Ahmet_Yilmaz_CV.pdf")
+            st.download_button("DOWNLOAD_DATA [CV] 💾", "Placeholder Data", "Ahmet_Yilmaz_CV.pdf")
             
         st.markdown("---")
         
-        # Quick Stats in Glass Cards
+        # Quick Stats in Cyber Cards
         st.markdown("""
-        <div class="glass-card">
-            <h4 style="margin:0; color:#00C9FF;">Core Focus</h4>
-            <p style="margin:0; color:#a0aec0; font-size:0.9rem;">
-                Retrieval-Augmented Generation (RAG) • Large Language Models • Deep Learning Research
+        <div class="cyber-card">
+            <h4 class="mono-font" style="margin:0; color:#bc13fe;">// CORE_DIRECTIVE</h4>
+            <p style="margin:0; color:#a0aec0; font-size:0.9rem; margin-top: 10px;">
+                Retrieval-Augmented Generation • Vector Search • Deep Learning Research
             </p>
         </div>
         """, unsafe_allow_html=True)
 
     with col_hero_img:
-        # Modern 3D Mesh Visualization
-        # Creating a wireframe landscape to represent "Data Topology"
-        x = np.linspace(-5, 5, 50)
-        y = np.linspace(-5, 5, 50)
+        # Cyber Wireframe Visualization
+        # Creating a digital terrain mesh
+        x = np.linspace(-5, 5, 40)
+        y = np.linspace(-5, 5, 40)
         X, Y = np.meshgrid(x, y)
-        R = np.sqrt(X**2 + Y**2)
-        Z = np.sin(R)
+        Z = np.sin(np.sqrt(X**2 + Y**2))
 
         fig = go.Figure(data=[go.Surface(
-            z=Z, 
-            x=X, 
-            y=Y,
-            colorscale='Viridis', 
-            opacity=0.8,
-            showscale=False
+            z=Z, x=X, y=Y,
+            colorscale='Electric', # Neon colors
+            showscale=False,
+            contours = {
+                "x": {"show": True, "start": 1.5, "end": 2, "size": 0.04, "color":"white"},
+                "y": {"show": True, "start": 0.5, "end": 0.8, "size": 0.05, "color":"white"},
+                "z": {"show": False}
+            }
         )])
         
         fig.update_layout(
             scene=dict(
-                xaxis=dict(visible=False),
-                yaxis=dict(visible=False),
-                zaxis=dict(visible=False),
+                xaxis=dict(visible=False, backgroundcolor="rgba(0,0,0,0)"),
+                yaxis=dict(visible=False, backgroundcolor="rgba(0,0,0,0)"),
+                zaxis=dict(visible=False, backgroundcolor="rgba(0,0,0,0)"),
                 bgcolor='rgba(0,0,0,0)'
             ),
             paper_bgcolor='rgba(0,0,0,0)',
@@ -177,75 +221,77 @@ if page == "Home":
         st.plotly_chart(fig, use_container_width=True)
 
 # --- EXPERTISE SECTION ---
-elif page == "Expertise":
-    st.title("Technical Arsenal ⚔️")
-    st.markdown("Bridging the gap between **academic theory** and **scalable production**.")
+elif page == "// EXPERTISE":
+    st.title("TECHNICAL_ARSENAL ⚔️")
+    st.markdown("<span class='mono-font'>BRIDGING ACADEMIC THEORY <-> PRODUCTION SCALING</span>", unsafe_allow_html=True)
+    st.write("") # Spacer
     
-    # Modern Grid Layout using Columns + HTML Cards
+    # Grid Layout
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
-        <div class="glass-card">
-            <h3>🤖 Generative AI & RAG</h3>
-            <p style="color:#b0bec5; font-size: 0.95rem;">
-                Architecting intelligent search systems that understand context, not just keywords.
+        <div class="cyber-card">
+            <h3 class="mono-font" style="color:#00ff41;">01. GEN_AI & RAG</h3>
+            <p style="color:#e0e0e0;">
+                Architecting context-aware search systems.
             </p>
-            <br>
-            <span class="tech-tag">LangChain</span>
-            <span class="tech-tag">Pinecone/Chroma</span>
-            <span class="tech-tag">LlamaIndex</span>
-            <span class="tech-tag">OpenAI API</span>
-            <span class="tech-tag">Prompt Eng.</span>
+            <div style="margin-top:15px;">
+                <span class="tech-tag">LANGCHAIN</span>
+                <span class="tech-tag">PINECONE</span>
+                <span class="tech-tag">OPENAI API</span>
+                <span class="tech-tag">LLAMA_INDEX</span>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("""
-        <div class="glass-card">
-            <h3>📊 Deep Learning & Data</h3>
-            <p style="color:#b0bec5; font-size: 0.95rem;">
-                Building custom neural networks for predictive analysis and computer vision.
+        <div class="cyber-card">
+            <h3 class="mono-font" style="color:#bc13fe;">02. DEEP LEARNING</h3>
+            <p style="color:#e0e0e0;">
+                Custom neural networks for predictive analysis.
             </p>
-            <br>
-            <span class="tech-tag">PyTorch</span>
-            <span class="tech-tag">TensorFlow</span>
-            <span class="tech-tag">Pandas</span>
-            <span class="tech-tag">NumPy</span>
-            <span class="tech-tag">Scikit-Learn</span>
+            <div style="margin-top:15px;">
+                <span class="tech-tag">PYTORCH</span>
+                <span class="tech-tag">TENSORFLOW</span>
+                <span class="tech-tag">NUMPY</span>
+                <span class="tech-tag">SCIKIT-LEARN</span>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-        <div class="glass-card">
-            <h3>🌩️ Full-Stack Deployment</h3>
-            <p style="color:#b0bec5; font-size: 0.95rem;">
-                Turning Python scripts into global, accessible web applications.
+        <div class="cyber-card">
+            <h3 class="mono-font" style="color:#fff;">03. FULL_STACK</h3>
+            <p style="color:#e0e0e0;">
+                Deploying Python logic to global endpoints.
             </p>
-            <br>
-            <span class="tech-tag">Streamlit</span>
-            <span class="tech-tag">FastAPI</span>
-            <span class="tech-tag">Firebase</span>
-            <span class="tech-tag">Docker</span>
-            <span class="tech-tag">Git/CI-CD</span>
+            <div style="margin-top:15px;">
+                <span class="tech-tag">STREAMLIT</span>
+                <span class="tech-tag">FASTAPI</span>
+                <span class="tech-tag">DOCKER</span>
+                <span class="tech-tag">FIREBASE</span>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Interactive Skill Meter
-        st.markdown("#### Proficiency Metrics")
+        # Techy Bar Chart
+        st.markdown("<h4 class='mono-font'>// SKILL_METRICS_LOADED</h4>", unsafe_allow_html=True)
         skill_df = pd.DataFrame({
-            "Skill": ["RAG Architecture", "Python", "Streamlit", "Deep Learning"],
-            "Level": [95, 90, 95, 85]
+            "MODULE": ["RAG_ARCH", "PYTHON", "STREAMLIT", "NN_MODELS"],
+            "LEVEL": [98, 92, 95, 88]
         })
-        # Custom bar chart color
-        fig_skills = px.bar(skill_df, x="Level", y="Skill", orientation='h', 
-                           range_x=[0,100], text="Level")
-        fig_skills.update_traces(marker_color='#00C9FF', textposition='inside')
+        
+        fig_skills = px.bar(skill_df, x="LEVEL", y="MODULE", orientation='h', 
+                           range_x=[0,100], text="LEVEL")
+        fig_skills.update_traces(marker_color='#bc13fe', textfont_family='JetBrains Mono')
         fig_skills.update_layout(
             plot_bgcolor='rgba(0,0,0,0)',
             paper_bgcolor='rgba(0,0,0,0)',
-            font_color='#fff',
-            xaxis=dict(showgrid=False, showticklabels=False),
+            font_color='#00ff41',
+            font_family='JetBrains Mono',
+            xaxis=dict(showgrid=True, gridcolor='#333'),
             yaxis=dict(showgrid=False),
             margin=dict(l=0, r=0, t=0, b=0),
             height=200
@@ -253,82 +299,82 @@ elif page == "Expertise":
         st.plotly_chart(fig_skills, use_container_width=True)
 
 # --- PROJECTS SECTION ---
-elif page == "Projects":
-    st.title("Project Showcase 🚀")
+elif page == "// PROJECTS":
+    st.title("PROJECT_DATABASE 📂")
     
     # Project 1
     st.markdown("""
-    <div class="glass-card">
+    <div class="cyber-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0; color:#00C9FF;">📄 PDF Chatbot RAG System</h3>
-            <span style="background:#2ecc71; color:black; padding:2px 8px; border-radius:4px; font-size:0.8rem; font-weight:bold;">LIVE</span>
+            <h3 style="margin:0; color:#00ff41;">> PDF_CHATBOT_RAG</h3>
+            <span style="background:#00ff41; color:black; padding:2px 8px; font-family:'JetBrains Mono'; font-weight:bold;">STATUS: ONLINE</span>
         </div>
-        <p style="margin-top:10px; color:#e0e0e0;">
-            A production-ready RAG application that turns static documents into interactive knowledge bases. 
-            Uses vector embeddings to reduce hallucinations and ensure answers are grounded in the source text.
+        <p style="margin-top:10px; color:#e0e0e0; font-family:'JetBrains Mono'; font-size: 0.9rem;">
+            SYSTEM_DESC: Production-ready RAG application turning static docs into interactive knowledge bases.<br>
+            OBJECTIVE: Reduce hallucinations via vector embeddings.
         </p>
         <div style="margin-top:15px;">
-            <span class="tech-tag">Streamlit</span>
-            <span class="tech-tag">Vector DB</span>
-            <span class="tech-tag">LLM Integration</span>
+            <span class="tech-tag">STREAMLIT</span>
+            <span class="tech-tag">VECTOR_DB</span>
+            <span class="tech-tag">LLM_INTEGRATION</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
     
     col_p1, col_p2 = st.columns([1, 4])
     with col_p1:
-        st.link_button("🚀 Launch App", "https://pdf-chatbot-rag-system-batuhanyilmaz.streamlit.app")
+        st.link_button("EXECUTE_APP [>>]", "https://pdf-chatbot-rag-system-batuhanyilmaz.streamlit.app")
     
     # Project 2
     st.markdown("""
-    <div class="glass-card">
+    <div class="cyber-card" style="border-left: 4px solid #bc13fe;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0; color:#00C9FF;">🌐 Deep Learning Portfolio Hub</h3>
-            <span style="background:#2ecc71; color:black; padding:2px 8px; border-radius:4px; font-size:0.8rem; font-weight:bold;">LIVE</span>
+            <h3 style="margin:0; color:#bc13fe;">> DL_PORTFOLIO_HUB</h3>
+            <span style="background:#bc13fe; color:white; padding:2px 8px; font-family:'JetBrains Mono'; font-weight:bold;">STATUS: ONLINE</span>
         </div>
-        <p style="margin-top:10px; color:#e0e0e0;">
-            A central repository for deep learning experiments, technical documentation, and research notes. 
-            Hosted on Firebase for high availability and scalability.
+        <p style="margin-top:10px; color:#e0e0e0; font-family:'JetBrains Mono'; font-size: 0.9rem;">
+            SYSTEM_DESC: Central repository for deep learning experiments and docs.<br>
+            HOSTING: Firebase high-availability cluster.
         </p>
         <div style="margin-top:15px;">
-            <span class="tech-tag">Firebase</span>
-            <span class="tech-tag">Web Dev</span>
-            <span class="tech-tag">Research</span>
+            <span class="tech-tag">FIREBASE</span>
+            <span class="tech-tag">WEB_DEV</span>
+            <span class="tech-tag">RESEARCH</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
     
     col_p3, col_p4 = st.columns([1, 4])
     with col_p3:
-        st.link_button("🌐 Visit Site", "https://deeplearningwithbatuhanyilmaz.web.app")
+        st.link_button("ACCESS_HUB [>>]", "https://deeplearningwithbatuhanyilmaz.web.app")
 
 # --- CONTACT SECTION ---
-elif page == "Contact":
-    st.title("Let's Build Something Great 🤝")
+elif page == "// CONTACT":
+    st.title("ESTABLISH_UPLINK 📡")
     
     col1, col2 = st.columns([1, 1])
     
     with col1:
         st.markdown("""
-        <div class="glass-card">
-            <h4>Contact Info</h4>
-            <p>📧 <b>Email:</b> ybatu42@gmail.com</p>
-            <p>📱 <b>Phone:</b> +90 551 706 52 03</p>
-            <p>📍 <b>Location:</b> Çanakkale, Türkiye</p>
+        <div class="cyber-card">
+            <h4 class="mono-font">COMMS_CHANNEL</h4>
+            <p>📧 <b>EMAIL:</b> ybatu42@gmail.com</p>
+            <p>📱 <b>PHONE:</b> +90 551 706 52 03</p>
+            <p>📍 <b>LOC:</b> Çanakkale, Türkiye</p>
             <br>
-            <p style="font-style:italic; color:#a0aec0;">
-                "Open to AI Engineering roles and RAG consulting opportunities."
+            <p style="color:#00ff41; font-family:'JetBrains Mono';">
+                "Ready for new AI directives and RAG consulting."
             </p>
         </div>
         """, unsafe_allow_html=True)
         
     with col2:
-        st.markdown("#### Send a Quick Message")
+        st.markdown("<h4 class='mono-font'>SEND_TRANSMISSION</h4>", unsafe_allow_html=True)
         with st.form("contact_form"):
-            name = st.text_input("Name")
-            email = st.text_input("Email")
-            message = st.text_area("Message")
-            submit = st.form_submit_button("Send Message")
+            name = st.text_input("USER_ID")
+            email = st.text_input("RETURN_ADDRESS")
+            message = st.text_area("DATA_PACKET")
+            submit = st.form_submit_button("TRANSMIT")
             
             if submit:
-                st.success("Message sent! I'll get back to you shortly.")
+                st.success("TRANSMISSION_RECEIVED. STAND BY FOR RESPONSE.")
